@@ -1,18 +1,13 @@
 import React from 'react';
-import img from '../../images/img.jpg'
-import { MyPosts } from './MyPosts/MyPosts';
+import {MyPosts} from './MyPosts/MyPosts';
 import s from "./Profile.module.css";
+import {ProfileInfo} from "./Profileinfo/Profileinfo";
 
 export const Profile = () => {
     return (
-        <div >
-            <div>
-                <img src={img} alt="img" />
-            </div>
-            <div>
-                ava+description
-            </div>
-            <MyPosts />
+        <div>
+            < ProfileInfo/>
+            <MyPosts/>
         </div>
     )
 }
