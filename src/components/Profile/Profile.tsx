@@ -6,7 +6,7 @@ import {ProfileInfo} from "./Profileinfo/Profileinfo";
 export const Profile = () => {
     return (
         <div>
-            < ProfileInfo/>
+            <ProfileInfo/>
             <MyPosts/>
         </div>
     )
