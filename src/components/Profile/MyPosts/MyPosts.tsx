@@ -8,7 +8,7 @@ export const MyPosts = () => {
         {id: v1(), message: "Hi,how are yuo?", likesCount: "0"},
         {id: v1(), message: "It,s my first post", likesCount: "23"},
     ]
-    const postsDataForMyPosts=postsData.map(p=>{
+    const postsElements=postsData.map(p=>{
         return(
             <Post message={p.message}
                   likesCount={p.likesCount}
@@ -27,7 +27,7 @@ export const MyPosts = () => {
                 </div>
             </div>
             <div className={s.posts}>
-                {postsDataForMyPosts}
+                {postsElements}
             </div>
         </div>
     )
