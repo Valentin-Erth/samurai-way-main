@@ -1,6 +1,8 @@
 import {v1} from "uuid";
-import {renderEntireTree} from "../render";
 
+let renderEntireTree=(state:stateType)=>{
+    console.log("State changed")
+}
 export type stateType = {
     profilePage: profilePageType
     dialogsPage: messagesPageType
@@ -71,4 +73,7 @@ export const addPost = () => {
 export const updateNewPostText = (NewText: string) => {
     state.profilePage.newPostText = NewText;
     renderEntireTree(state);
+}
+export const subscribe=(observer:(state:stateType)=>void)=>{
+    renderEntireTree=observer;// наблюдатель
 }
