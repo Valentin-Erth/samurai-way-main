@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import s from "./MyPosts.module.css";
 import {Post} from './Post/Post';
 import {postsType} from "../../../Redux/State";
@@ -6,6 +6,8 @@ import {postsType} from "../../../Redux/State";
 type MyPostsType = {
     postsData: postsType[]
     addPost: (postText: string) => void
+    newPostText:string
+    updateNewPostText:(NewText: string)=>void
 }
 export const MyPosts = (props: MyPostsType) => {
 
@@ -17,23 +19,23 @@ export const MyPosts = (props: MyPostsType) => {
                   id={p.id}/>
         )
     })
-    const newPostElement = React.createRef<HTMLTextAreaElement>();
-    const addPost = () => {
-        if(newPostElement.current){
-            props.addPost( newPostElement.current.value)
-            newPostElement.current.value=""
-        }
 
+    const addPostHandler = () => {
+        props.addPost(props.newPostText);
+
+    }
+    const onPostChangeHandler=(e:ChangeEvent<HTMLTextAreaElement>)=>{
+        props.updateNewPostText(e.currentTarget.value)
     }
     return (
         <div className={s.postsBlock}>
             <h3>My Post</h3>
             <div>
                 <div>
-                    <textarea ref={newPostElement}></textarea>
+                    <textarea  onChange={onPostChangeHandler} value={props.newPostText}/>
                 </div>
                 <div>
-                    <button onClick={addPost}>Add post</button>
+                    <button onClick={addPostHandler}>Add post</button>
                 </div>
             </div>
             <div className={s.posts}>
