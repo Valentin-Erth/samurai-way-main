@@ -1,8 +1,9 @@
 import {v1} from "uuid";
 
-let renderEntireTree=(state:stateType)=>{
+let renderEntireTree=()=>{
     console.log("State changed")
 }
+
 export type stateType = {
     profilePage: profilePageType
     dialogsPage: messagesPageType
@@ -66,14 +67,13 @@ export const addPost = () => {
         likesCount: "0"
     };
     state.profilePage.posts.push(newPost);
-    renderEntireTree(state);
+    renderEntireTree();
     state.profilePage.newPostText = ""
-
 }
 export const updateNewPostText = (NewText: string) => {
     state.profilePage.newPostText = NewText;
-    renderEntireTree(state);
+    renderEntireTree();
 }
-export const subscribe=(observer:(state:stateType)=>void)=>{
-    renderEntireTree=observer;// наблюдатель
+export const subscribe=(callback:()=>void)=>{
+    renderEntireTree=callback;// наблюдатель
 }
