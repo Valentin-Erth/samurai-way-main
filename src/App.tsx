@@ -12,7 +12,7 @@ type appStateType = {
     addPost:(postText: string)=>void
     updateNewPostText:(NewText: string)=>void
 }
-const App = (props: appStateType) => {
+const App: React.FC<appStateType> = (props) => {
     return (
             <div className='app-wrapper'>
                 <Header/>

@@ -1,9 +1,13 @@
 import {v1} from "uuid";
 
-let renderEntireTree=()=>{
-    console.log("State changed")
+export type StoreType = {
+    _state: stateType
+    updateNewPostText:(NewText: string)=>void
+    addPost:(postText:string)=>void
+    _renderEntireTree:()=>void
+    subscribe:(callback: () => void)=>void
+    getState:()=>stateType
 }
-
 export type stateType = {
     profilePage: profilePageType
     dialogsPage: messagesPageType
@@ -31,49 +35,56 @@ export type messagesPageType = {
     messages: messagesType[]
     dialogs: dialogsType[]
 }
-export let state: stateType = {
-    profilePage: {
-        posts: [
-            {id: v1(), message: "Hi,how are yuo?", likesCount: "0"},
-            {id: v1(), message: "It,s my first post", likesCount: "23"}
-        ],
-        newPostText: "It-kamasutra"
+export const Store: StoreType = {
+    _state: {
+        profilePage: {
+            posts: [
+                {id: v1(), message: "Hi,how are yuo?", likesCount: "0"},
+                {id: v1(), message: "It,s my first post", likesCount: "23"}
+            ],
+            newPostText: "It-kamasutra"
+        },
+        dialogsPage: {
+            messages: [
+                {id: v1(), message: "Hi"},
+                {id: v1(), message: "How are you"},
+                {id: v1(), message: "Yo"},
+                {id: v1(), message: "Yo"},
+                {id: v1(), message: "Yo"}
+            ],
+            dialogs: [
+                {id: v1(), name: "Dimych"},
+                {id: v1(), name: "Andrey"},
+                {id: v1(), name: "Sveta"},
+                {id: v1(), name: "Sasha"},
+                {id: v1(), name: "Victor"},
+                {id: v1(), name: "Valera"}
+            ]
+        },
+        sidebar: {}
     },
-    dialogsPage: {
-        messages: [
-            {id: v1(), message: "Hi"},
-            {id: v1(), message: "How are you"},
-            {id: v1(), message: "Yo"},
-            {id: v1(), message: "Yo"},
-            {id: v1(), message: "Yo"}
-        ],
-        dialogs: [
-            {id: v1(), name: "Dimych"},
-            {id: v1(), name: "Andrey"},
-            {id: v1(), name: "Sveta"},
-            {id: v1(), name: "Sasha"},
-            {id: v1(), name: "Victor"},
-            {id: v1(), name: "Valera"}
-        ]
+    updateNewPostText(NewText: string){
+        this._state.profilePage.newPostText =NewText;
+        this._renderEntireTree();
     },
-    sidebar: {}
+    addPost (postText:string){
+        const newPost: postsType = {id: v1(),message: postText,
+            likesCount: "0"
+        }
+        this._state.profilePage.posts.push(newPost);
+        this._renderEntireTree();
+        this._state.profilePage.newPostText = ""
+    },
+    _renderEntireTree () {
+        console.log("State changed")
+    },
+    subscribe(callback) {
+        this._renderEntireTree = callback;// наблюдатель
+    },
+    getState(){
+        return this._state
+    }
 }
 
-export const addPost = () => {
-    // debugger;
-    const newPost: postsType = {
-        id: v1(),
-        message: state.profilePage.newPostText,
-        likesCount: "0"
-    };
-    state.profilePage.posts.push(newPost);
-    renderEntireTree();
-    state.profilePage.newPostText = ""
-}
-export const updateNewPostText = (NewText: string) => {
-    state.profilePage.newPostText = NewText;
-    renderEntireTree();
-}
-export const subscribe=(callback:()=>void)=>{
-    renderEntireTree=callback;// наблюдатель
-}
+
+
