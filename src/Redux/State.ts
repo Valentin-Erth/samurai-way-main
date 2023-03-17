@@ -2,12 +2,22 @@ import {v1} from "uuid";
 
 export type StoreType = {
     _state: stateType
-    updateNewPostText:(NewText: string)=>void
-    addPost:(postText:string)=>void
-    _renderEntireTree:()=>void
-    subscribe:(callback: () => void)=>void
-    getState:()=>stateType
+    updateNewPostText: (NewText: string) => void
+    addPost: (postText: string) => void
+    _renderEntireTree: () => void
+    subscribe: (callback: () => void) => void
+    getState: () => stateType
+    dispatch: (action: ActionTypes) => void
 }
+type AddPostActionType = {
+    type: "ADD-POST"
+    postText: string
+}
+type ChangeNewTextActionType = {
+    type: "UPDATE-NEW-POST-TEXT"
+    NewText: string
+}
+export type ActionTypes = AddPostActionType | ChangeNewTextActionType
 export type stateType = {
     profilePage: profilePageType
     dialogsPage: messagesPageType
@@ -63,28 +73,46 @@ export const Store: StoreType = {
         },
         sidebar: {}
     },
-    updateNewPostText(NewText: string){
-        this._state.profilePage.newPostText =NewText;
+    _renderEntireTree() {
+        console.log("State changed")
+    },
+    subscribe(callback) {
+        this._renderEntireTree = callback;// наблюдатель
+    },
+    getState() {
+        return this._state
+    },
+    updateNewPostText(NewText: string) {
+        this._state.profilePage.newPostText = NewText;
         this._renderEntireTree();
     },
-    addPost (postText:string){
-        const newPost: postsType = {id: v1(),message: postText,
+    addPost(postText: string) {
+        const newPost: postsType = {
+            id: v1(), message: postText,
             likesCount: "0"
         }
         this._state.profilePage.posts.push(newPost);
         this._renderEntireTree();
         this._state.profilePage.newPostText = ""
     },
-    _renderEntireTree () {
-        console.log("State changed")
-    },
-    subscribe(callback) {
-        this._renderEntireTree = callback;// наблюдатель
-    },
-    getState(){
-        return this._state
-    }
-}
+    dispatch(action) {
+        if (action.type === "ADD-POST") {
+            // debugger;
+            const newPost: postsType = {
+                id: v1(), message: action.postText,
+                likesCount: "0"
+            }
+            this._state.profilePage.posts.push(newPost);
+            this._renderEntireTree();
+            this._state.profilePage.newPostText = ""
+        } else if (action.type === "UPDATE-NEW-POST-TEXT") {
+            this._state.profilePage.newPostText = action.NewText;
+            this._renderEntireTree();
+        }
 
+    }
+
+}
+//strore-OPP
 
 
