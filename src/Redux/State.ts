@@ -2,8 +2,6 @@ import {v1} from "uuid";
 
 export type StoreType = {
     _state: stateType
-    _updateNewPostText: (NewText: string) => void
-    _addPost: (postText: string) => void
     _renderEntireTree: () => void
     subscribe: (callback: () => void) => void
     getState: () => stateType
@@ -82,25 +80,19 @@ export const Store: StoreType = {
     getState() {
         return this._state
     },
-    _updateNewPostText(NewText: string) {
-        this._state.profilePage.newPostText = NewText;
-        this._renderEntireTree();
-    },
-    _addPost(postText: string) {
-        const newPost: postsType = {
-            id: v1(), message: postText,
-            likesCount: "0"
-        }
-        this._state.profilePage.posts.push(newPost);
-        this._renderEntireTree();
-        this._state.profilePage.newPostText = ""
-    },
     dispatch(action) {
         if (action.type === "ADD-POST") {
             // debugger;
-            this._addPost(action.postText)
-            } else if (action.type === "UPDATE-NEW-POST-TEXT") {
-            this._updateNewPostText(action.NewText)
+            const newPost: postsType = {
+                id: v1(), message: action.postText,
+                likesCount: "0"
+            }
+            this._state.profilePage.posts.push(newPost);
+            this._renderEntireTree();
+            this._state.profilePage.newPostText = ""
+        } else if (action.type === "UPDATE-NEW-POST-TEXT") {
+            this._state.profilePage.newPostText = action.NewText;
+            this._renderEntireTree();
         }
 
     }
