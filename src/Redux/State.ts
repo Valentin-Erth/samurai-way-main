@@ -15,7 +15,7 @@ export type StoreType = {
 //     type: "UPDATE-NEW-POST-TEXT"
 //     NewText: string
 // }
-export type ActionTypes = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator>
+export type ActionTypes = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator>| ReturnType<typeof updataNewMessageTextActionCreator>|ReturnType<typeof sendMessageActionCreator>
 export type stateType = {
     profilePage: profilePageType
     dialogsPage: messagesPageType
@@ -42,6 +42,7 @@ export type profilePageType = {
 export type messagesPageType = {
     messages: messagesType[]
     dialogs: dialogsType[]
+    newMessageText: string
 }
 export const Store: StoreType = {
     _state: {
@@ -67,7 +68,8 @@ export const Store: StoreType = {
                 {id: v1(), name: "Sasha"},
                 {id: v1(), name: "Victor"},
                 {id: v1(), name: "Valera"}
-            ]
+            ],
+            newMessageText: ""
         },
         sidebar: {}
     },
@@ -81,7 +83,7 @@ export const Store: StoreType = {
         return this._state
     },
     dispatch(action) {
-        if (action.type === "ADD-POST") {
+        if (action.type === "ADD_POST") {
             // debugger;
             const newPost: postsType = {
                 id: v1(), message: action.postText,
@@ -90,8 +92,16 @@ export const Store: StoreType = {
             this._state.profilePage.posts.push(newPost);
             this._renderEntireTree();
             this._state.profilePage.newPostText = ""
-        } else if (action.type === "UPDATE-NEW-POST-TEXT") {
+        } else if (action.type === "UPDATE_NEW_POST_TEXT") {
             this._state.profilePage.newPostText = action.NewText;
+            this._renderEntireTree();
+        } else if(action.type ==="UPDATE_NEW_MESSAGE-TEXT"){
+            this._state.dialogsPage.newMessageText=action.NewMessage
+            this._renderEntireTree();
+        }else if(action.type ==="SEND_MESSAGE"){
+            let textMessage=this._state.dialogsPage.newMessageText
+            this._state.dialogsPage.newMessageText=""
+            this._state.dialogsPage.messages.push({id: v1(), message: textMessage})
             this._renderEntireTree();
         }
     }
@@ -99,14 +109,26 @@ export const Store: StoreType = {
 //strore-OPP
 export const addPostActionCreator=(newPostText:string)=>{
     return {
-        type: "ADD-POST",
+        type: "ADD_POST",
         postText: newPostText
     } as const
 }
 export const updateNewPostTextActionCreator=(NewText:string)=>{
     return {
-        type: "UPDATE-NEW-POST-TEXT",
+        type: "UPDATE_NEW_POST_TEXT",
         NewText: NewText
     } as const
+}
+export const updataNewMessageTextActionCreator=(NewMessage:string)=>{
+    return{
+        type: "UPDATE_NEW_MESSAGE-TEXT",
+        NewMessage: NewMessage
+    }as const
+}
+export const sendMessageActionCreator=(NewMessage:string)=>{
+    return{
+        type: "SEND_MESSAGE",
+        NewMessage: NewMessage
+    }as const
 }
 

@@ -19,6 +19,7 @@ const App: React.FC<AppStateType> = (props) => {
             <div className="app-wrapper-content">
                 <Route path="/dialogs" render={() => <Dialogs
                     Data={props.state.dialogsPage}
+                    dispatch={props.dispatch}
                 />}/>
                 <Route path="/profile" render={() => <Profile
                     Data={props.state.profilePage}
