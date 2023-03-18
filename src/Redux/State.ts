@@ -5,17 +5,17 @@ export type StoreType = {
     _renderEntireTree: () => void
     subscribe: (callback: () => void) => void
     getState: () => stateType
-    dispatch: (action: ActionTypes) => void
+    dispatch: (actionCreator: ActionTypes) => void
 }
-type AddPostActionType = {
-    type: "ADD-POST"
-    postText: string
-}
-type ChangeNewTextActionType = {
-    type: "UPDATE-NEW-POST-TEXT"
-    NewText: string
-}
-export type ActionTypes = AddPostActionType | ChangeNewTextActionType
+// type AddPostActionType = {
+//     type: "ADD-POST"
+//     postText: string
+// }
+// type ChangeNewTextActionType = {
+//     type: "UPDATE-NEW-POST-TEXT"
+//     NewText: string
+// }
+export type ActionTypes = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator>
 export type stateType = {
     profilePage: profilePageType
     dialogsPage: messagesPageType
@@ -94,10 +94,19 @@ export const Store: StoreType = {
             this._state.profilePage.newPostText = action.NewText;
             this._renderEntireTree();
         }
-
     }
-
 }
 //strore-OPP
-
+export const addPostActionCreator=(newPostText:string)=>{
+    return {
+        type: "ADD-POST",
+        postText: newPostText
+    } as const
+}
+export const updateNewPostTextActionCreator=(NewText:string)=>{
+    return {
+        type: "UPDATE-NEW-POST-TEXT",
+        NewText: NewText
+    } as const
+}
 

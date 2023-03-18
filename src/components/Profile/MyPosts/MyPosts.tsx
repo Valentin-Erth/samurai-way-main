@@ -1,13 +1,14 @@
 import React, {ChangeEvent} from 'react';
 import s from "./MyPosts.module.css";
 import {Post} from './Post/Post';
-import {ActionTypes, postsType} from "../../../Redux/State";
+import {ActionTypes, addPostActionCreator, postsType, updateNewPostTextActionCreator} from "../../../Redux/State";
 
 type MyPostsType = {
     postsData: postsType[]
     dispatch: (action: ActionTypes) => void
-    newPostText:string
-    }
+    newPostText: string
+}
+
 export const MyPosts = (props: MyPostsType) => {
 
     const postsElements = props.postsData.map(p => {
@@ -21,17 +22,18 @@ export const MyPosts = (props: MyPostsType) => {
 
     const addPostHandler = () => {
         // props.addPost(props.newPostText);
-        props.dispatch({type: "ADD-POST", postText: props.newPostText});
+        props.dispatch(addPostActionCreator(props.newPostText));
     }
-    const onPostChangeHandler=(e:ChangeEvent<HTMLTextAreaElement>)=>{
-        props.dispatch({type:"UPDATE-NEW-POST-TEXT",NewText: e.currentTarget.value})
+    const onPostChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        let NewText=e.currentTarget.value;
+        props.dispatch(updateNewPostTextActionCreator(NewText))
     }
     return (
         <div className={s.postsBlock}>
             <h3>My Post</h3>
             <div>
                 <div>
-                    <textarea  onChange={onPostChangeHandler} value={props.newPostText}/>
+                    <textarea onChange={onPostChangeHandler} value={props.newPostText}/>
                 </div>
                 <div>
                     <button onClick={addPostHandler}>Add post</button>
