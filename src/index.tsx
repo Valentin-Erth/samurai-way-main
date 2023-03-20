@@ -1,6 +1,6 @@
 import React from 'react';
 import './index.css';
-import {Store} from "./Redux/State";
+import {store} from "./Redux/ReduxStore";
 import ReactDOM from "react-dom";
 import App from "./App";
 import {BrowserRouter} from "react-router-dom";
@@ -9,11 +9,11 @@ import {BrowserRouter} from "react-router-dom";
 const renderEntireTree = () => {
     ReactDOM.render(
         <BrowserRouter>
-            <App state={Store.getState()}
-                 dispatch={Store.dispatch.bind(Store)}
+            <App state={store.getState()}
+                 dispatch={store.dispatch.bind(store)}
             /></BrowserRouter>,
         document.getElementById('root')
     );
 };
 renderEntireTree();// Отрисовка со старта
-Store.subscribe(renderEntireTree);
+store.subscribe(renderEntireTree);

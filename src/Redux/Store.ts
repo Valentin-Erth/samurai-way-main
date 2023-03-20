@@ -22,7 +22,7 @@ export type ActionTypes = ReturnType<typeof addPostActionCreator> | ReturnType<t
 export type stateType = {
     profilePage: profilePageType
     dialogsPage: messagesPageType
-    sidebar: sidebarType
+    sidebarPage: sidebarType
 }
 export type sidebarType = {}
 export type messagesType = {
@@ -74,7 +74,7 @@ export const Store: StoreType = {
             ],
             newMessageText: ""
         },
-        sidebar: {}
+        sidebarPage: {}
     },
     _renderEntireTree() {
         console.log("State changed")
@@ -88,7 +88,7 @@ export const Store: StoreType = {
     dispatch(action) {
         this._state.profilePage= profileReducer(this._state.profilePage,action);
         this._state.dialogsPage= dialogsReducer(this._state.dialogsPage,action);
-        this._state.sidebar= sidebarReducer(this._state.sidebar,action);
+        this._state.sidebarPage= sidebarReducer(this._state.sidebarPage,action);
         this._renderEntireTree();
     }
 }
