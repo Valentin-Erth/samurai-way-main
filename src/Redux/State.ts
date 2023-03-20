@@ -1,4 +1,7 @@
 import {v1} from "uuid";
+import {addPostActionCreator, profileReducer, updateNewPostTextActionCreator} from "./ProfileReducer";
+import {dialogsReducer, sendMessageActionCreator, updataNewMessageTextActionCreator} from "./DialogsReducer";
+import {sidebarReducer} from "./SidebarReducer";
 
 export type StoreType = {
     _state: stateType
@@ -21,7 +24,7 @@ export type stateType = {
     dialogsPage: messagesPageType
     sidebar: sidebarType
 }
-type sidebarType = {}
+export type sidebarType = {}
 export type messagesType = {
     id: string
     message: string
@@ -83,52 +86,13 @@ export const Store: StoreType = {
         return this._state
     },
     dispatch(action) {
-        if (action.type === "ADD_POST") {
-            // debugger;
-            const newPost: postsType = {
-                id: v1(), message: action.postText,
-                likesCount: "0"
-            }
-            this._state.profilePage.posts.push(newPost);
-            this._renderEntireTree();
-            this._state.profilePage.newPostText = ""
-        } else if (action.type === "UPDATE_NEW_POST_TEXT") {
-            this._state.profilePage.newPostText = action.NewText;
-            this._renderEntireTree();
-        } else if(action.type ==="UPDATE_NEW_MESSAGE-TEXT"){
-            this._state.dialogsPage.newMessageText=action.NewMessage
-            this._renderEntireTree();
-        }else if(action.type ==="SEND_MESSAGE"){
-            let textMessage=this._state.dialogsPage.newMessageText
-            this._state.dialogsPage.newMessageText=""
-            this._state.dialogsPage.messages.push({id: v1(), message: textMessage})
-            this._renderEntireTree();
-        }
+        this._state.profilePage= profileReducer(this._state.profilePage,action);
+        this._state.dialogsPage= dialogsReducer(this._state.dialogsPage,action);
+        this._state.sidebar= sidebarReducer(this._state.sidebar,action);
+        this._renderEntireTree();
     }
 }
 //strore-OPP
-export const addPostActionCreator=(newPostText:string)=>{
-    return {
-        type: "ADD_POST",
-        postText: newPostText
-    } as const
-}
-export const updateNewPostTextActionCreator=(NewText:string)=>{
-    return {
-        type: "UPDATE_NEW_POST_TEXT",
-        NewText: NewText
-    } as const
-}
-export const updataNewMessageTextActionCreator=(NewMessage:string)=>{
-    return{
-        type: "UPDATE_NEW_MESSAGE-TEXT",
-        NewMessage: NewMessage
-    }as const
-}
-export const sendMessageActionCreator=(NewMessage:string)=>{
-    return{
-        type: "SEND_MESSAGE",
-        NewMessage: NewMessage
-    }as const
-}
+
+
 
