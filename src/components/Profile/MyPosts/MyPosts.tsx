@@ -5,11 +5,11 @@ import {ActionTypes, postsType} from "../../../Redux/Store";
 import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../Redux/ProfileReducer";
 
 type MyPostsType = {
+    onPostChange:(NewText:string)=>void
+    addPost:(newPostText:string)=>void
+    newPostText:string
     postsData: postsType[]
-    dispatch: (action: ActionTypes) => void
-    newPostText: string
 }
-
 export const MyPosts = (props: MyPostsType) => {
 
     const postsElements = props.postsData.map(p => {
@@ -22,12 +22,13 @@ export const MyPosts = (props: MyPostsType) => {
     })
 
     const addPostHandler = () => {
-        // props.addPost(props.newPostText);
-        props.dispatch(addPostActionCreator(props.newPostText));
+        props.addPost(props.newPostText);
+        // props.dispatch(addPostActionCreator(props.newPostText));
     }
     const onPostChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let NewText=e.currentTarget.value;
-        props.dispatch(updateNewPostTextActionCreator(NewText))
+        props.onPostChange(NewText)
+        // props.dispatch(updateNewPostTextActionCreator(NewText))
     }
     return (
         <div className={s.postsBlock}>
