@@ -4,32 +4,28 @@ import {Post} from './Post/Post';
 import {ActionTypes, postsType} from "../../../Redux/Store";
 import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../Redux/ProfileReducer";
 import {MyPosts} from "./MyPosts";
+import {stateType, StoreTypeRedux} from "../../../Redux/ReduxStore";
 
-type MyPostsType = {
-    postsData: postsType[]
-    dispatch: (action: ActionTypes) => void
-    newPostText: string
+type MyPostsTypeontainer = {
+    // postsData: postsType[]
+    // dispatch: (action: ActionTypes) => void
+    // newPostText: string
+    store: StoreTypeRedux
 }
 
-export const MyPostsContainer = (props: MyPostsType) => {
+export const MyPostsContainer = (props: MyPostsTypeontainer) => {
 
-    const postsElements = props.postsData.map(p => {
-        return (
-            <Post key={p.id}
-                  message={p.message}
-                  likesCount={p.likesCount}
-                  id={p.id}/>
-        )
-    })
-
-    const addPostHandler = (newPostText:string) => {
+    const state: stateType = props.store.getState();
+    const addPost = (newPostText: string) => {
         // props.addPost(props.newPostText);
-        props.dispatch(addPostActionCreator(newPostText));
+        props.store.dispatch(addPostActionCreator(newPostText));
     }
-    const onPostChangeHandler = (NewText:string) => {
-        props.dispatch(updateNewPostTextActionCreator(NewText))
+    const onPostChange = (NewText: string) => {
+        props.store.dispatch(updateNewPostTextActionCreator(NewText))
     }
     return (
-        <MyPosts onPostChange={onPostChangeHandler} addPost={addPostHandler} newPostText={props.newPostText} postsData={props.postsData}/>
+        <MyPosts onPostChange={onPostChange}
+                 addPost={addPost} newPostText={state.profilePage.newPostText}
+                 postsData={state.profilePage.posts}/>
     )
 }

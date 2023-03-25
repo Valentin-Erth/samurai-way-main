@@ -2,6 +2,7 @@ import {v1} from "uuid";
 import {addPostActionCreator, profileReducer, updateNewPostTextActionCreator} from "./ProfileReducer";
 import {dialogsReducer, sendMessageActionCreator, updataNewMessageTextActionCreator} from "./DialogsReducer";
 import {sidebarReducer} from "./SidebarReducer";
+import {stateType} from "./ReduxStore";
 
 export type StoreType = {
     _state: stateType
@@ -19,11 +20,7 @@ export type StoreType = {
 //     NewText: string
 // }
 export type ActionTypes = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator>| ReturnType<typeof updataNewMessageTextActionCreator>|ReturnType<typeof sendMessageActionCreator>
-export type stateType = {
-    profilePage: profilePageType
-    dialogsPage: messagesPageType
-    sidebarPage: sidebarType
-}
+
 export type sidebarType = {}
 export type messagesType = {
     id: string

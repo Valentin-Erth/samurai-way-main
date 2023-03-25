@@ -5,18 +5,21 @@ import {ProfileInfo} from "./Profileinfo/Profileinfo";
 import {PostType} from "./MyPosts/Post/Post";
 import {ActionTypes, profilePageType} from "../../Redux/Store";
 import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
+import {StoreTypeRedux} from "../../Redux/ReduxStore";
 
 type ProfileType = {
-    Data: profilePageType
-    dispatch: (action: ActionTypes) => void
+    //Data: profilePageType
+    //dispatch: (action: ActionTypes) => void
+    store: StoreTypeRedux
 }
 export const Profile = (props: ProfileType) => {
     return (
         <div>
             <ProfileInfo/>
-            <MyPostsContainer postsData={props.Data.posts}
-                     dispatch={props.dispatch}
-                     newPostText={props.Data.newPostText}
+            <MyPostsContainer store={props.store}
+                // postsData={props.Data.posts}
+                //      dispatch={props.dispatch}
+                //      newPostText={props.Data.newPostText}
             />
         </div>
     )

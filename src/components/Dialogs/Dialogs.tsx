@@ -4,12 +4,14 @@ import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
 import {ActionTypes,messagesPageType} from "../../Redux/Store";
 import {sendMessageActionCreator, updataNewMessageTextActionCreator} from "../../Redux/DialogsReducer";
+import {StoreTypeRedux} from "../../Redux/ReduxStore";
 
 type DialogsType = {
     Data: messagesPageType
-    dispatch: (action: ActionTypes) => void
-
-}
+    sendMessage:(newMessageText:string)=>void
+    updataNewMessageText:(NewMessage:string)=>void
+    newMessageText:string
+    }
 export const Dialogs = (props: DialogsType) => {
 // debugger;
     const dialogsElements = props.Data.dialogs.map(d => {
@@ -22,13 +24,13 @@ export const Dialogs = (props: DialogsType) => {
             <Message key={m.id} message={m.message} id={m.id}/>
         )
     })
-    const newMessageElement = props.Data.newMessageText
+
     const onSendMessageButton = () => {
-       props.dispatch(sendMessageActionCreator(newMessageElement));
+       props.sendMessage(props.newMessageText);
     }
     const onMessageChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let NewMessage=e.currentTarget.value;
-        props.dispatch(updataNewMessageTextActionCreator(NewMessage))
+        props.updataNewMessageText(NewMessage);
     }
     return (
         <div className={s.dialogs}>
@@ -40,7 +42,7 @@ export const Dialogs = (props: DialogsType) => {
                 <div>
                     <button onClick={onSendMessageButton}>add message</button>
                 </div>
-                <div><textarea placeholder={"Enter yuor message"} value={newMessageElement} onChange={onMessageChangeHandler}></textarea></div>
+                <div><textarea placeholder={"Enter yuor message"} value={props.newMessageText} onChange={onMessageChangeHandler}></textarea></div>
             </div>
         </div>
     )
