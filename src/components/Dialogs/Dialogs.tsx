@@ -2,17 +2,9 @@ import React, {ChangeEvent} from "react";
 import s from "./Dialogs.module.css"
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
-import {ActionTypes,messagesPageType} from "../../Redux/Store";
-import {sendMessageActionCreator, updataNewMessageTextActionCreator} from "../../Redux/DialogsReducer";
-import {StoreTypeRedux} from "../../Redux/ReduxStore";
+import {DialogsPropsType} from "./DialogsContainer";
 
-type DialogsType = {
-    Data: messagesPageType
-    sendMessage:(newMessageText:string)=>void
-    updataNewMessageText:(NewMessage:string)=>void
-    newMessageText:string
-    }
-export const Dialogs = (props: DialogsType) => {
+export const Dialogs = (props: DialogsPropsType) => {
 // debugger;
     const dialogsElements = props.Data.dialogs.map(d => {
         return (
@@ -21,7 +13,7 @@ export const Dialogs = (props: DialogsType) => {
     })
     const messagesElements = props.Data.messages.map(m => {
         return (
-            <Message key={m.id} message={m.message} id={m.id}/>
+            <Message key={m.id} message={m.message} id={m.id} />
         )
     })
 

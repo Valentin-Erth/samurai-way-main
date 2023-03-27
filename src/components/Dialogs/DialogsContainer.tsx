@@ -1,41 +1,62 @@
-import React, {ChangeEvent} from "react";
-import s from "./Dialogs.module.css"
-import {DialogItem} from "./DialogItem/DialogItem";
-import {Message} from "./Message/Message";
-import {ActionTypes, messagesPageType} from "../../Redux/Store";
-import {sendMessageActionCreator, updataNewMessageTextActionCreator} from "../../Redux/DialogsReducer";
-import {stateType, StoreTypeRedux} from "../../Redux/ReduxStore";
+import React  from "react";
+import {
+    InitialStateType,
+    sendMessageActionCreator,
+    updataNewMessageTextActionCreator
+} from "../../Redux/DialogsReducer";
+import {RootStateType} from "../../Redux/ReduxStore";
 import {Dialogs} from "./Dialogs";
-import {StoreContext} from "../../StoreContext";
+import {connect} from "react-redux";
+import {Dispatch} from "redux";
 
-type DialogsContainerType = {
-    // store: StoreTypeRedux
+
+// export const DialogsContainer = (props: DialogsContainerType) => {
+// // debugger;
+//
+//     return(
+//         <StoreContext.Consumer>
+//             {(store)=>{
+//                 const state:RootStateType=store.getState();
+//                 const onSendMessageButton = (newMessageText:string) => {
+//                     store.dispatch(sendMessageActionCreator(newMessageText));
+//                 }
+//                 const onMessageChangeHandler = (NewMessage:string) => {
+//                     store.dispatch(updataNewMessageTextActionCreator(NewMessage))
+//                 }
+//                 return(
+//                     <Dialogs updataNewMessageText={onMessageChangeHandler}
+//                              sendMessage={onSendMessageButton}
+//                              newMessageText={state.dialogsPage.newMessageText}
+//                              Data={state.dialogsPage}/>
+//                     )}
+//         }
+//         </StoreContext.Consumer>
+//         )}
+type MapStateToPropsType={
+    Data:InitialStateType
+    newMessageText:string
 }
-export const DialogsContainer = (props: DialogsContainerType) => {
-// debugger;
+type MapDispatchtoPropsType={
+    updataNewMessageText:(newMessageText:string)=>void
+    sendMessage:(NewMessage:string)=>void
+}
+export type DialogsPropsType=MapStateToPropsType & MapDispatchtoPropsType
+const mapStateToProps=(state:RootStateType):MapStateToPropsType=>{
+    return {
+        Data: state.dialogsPage,
+        newMessageText:state.dialogsPage.newMessageText
+    }
+}
+const mapDispatchToProps=(dispatch: Dispatch):MapDispatchtoPropsType=>{
+    return {
+        updataNewMessageText:(newMessageText:string)=>{
+            dispatch(updataNewMessageTextActionCreator(newMessageText))
 
-    return(
-        <StoreContext.Consumer>
-            {(store)=>{
-                const state:stateType=store.getState();
-                const onSendMessageButton = (newMessageText:string) => {
-                    store.dispatch(sendMessageActionCreator(newMessageText));
-                }
-                const onMessageChangeHandler = (NewMessage:string) => {
-                    store.dispatch(updataNewMessageTextActionCreator(NewMessage))
-                }
-                return(
-                    <Dialogs updataNewMessageText={onMessageChangeHandler}
-                             sendMessage={onSendMessageButton}
-                             newMessageText={state.dialogsPage.newMessageText}
-                             Data={state.dialogsPage}/>
-                    )
-
-            }
-
+        },
+        sendMessage:(NewMessage:string)=>{
+            dispatch(sendMessageActionCreator(NewMessage));
         }
-        </StoreContext.Consumer>
-        )
 
-
+    }
 }
+export const DialogsContainer=connect(mapStateToProps,mapDispatchToProps)(Dialogs);

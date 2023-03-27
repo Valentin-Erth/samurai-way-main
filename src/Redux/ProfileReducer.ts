@@ -1,14 +1,20 @@
 import {v1} from "uuid";
-import {ActionTypes, postsType, profilePageType} from "./Store";
 
+export type ActionProfileTypes = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator>
+type postsType = {
+    id: string
+    message: string
+    likesCount: string
+}
+export type InitialStateType = typeof initialState;
 let initialState={
     posts: [
         {id: v1(), message: "Hi,how are yuo?", likesCount: "0"},
         {id: v1(), message: "It,s my first post", likesCount: "23"}
-    ],
+    ] as postsType[],
     newPostText: "It-kamasutra"
 }
-export const profileReducer = (state:profilePageType=initialState, action:ActionTypes) => {
+export const profileReducer = (state:InitialStateType=initialState, action:ActionProfileTypes):InitialStateType => {
     switch (action.type){
         case "ADD_POST":
             const newPost: postsType = {
