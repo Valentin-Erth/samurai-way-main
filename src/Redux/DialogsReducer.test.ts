@@ -16,32 +16,12 @@ test("message should be update",()=>{
             {id: v1(), message: "Yo"}
         ] as MessagesType[],
         dialogs: [
-            {id: v1(), name: "Dimych", avatar: "https://thumbs.dreamstime.com/b/avatar-van-de-geekmens-104871313.jpg"},
-            {
-                id: v1(),
-                name: "Andrey",
-                avatar: "https://www.shutterstock.com/image-vector/young-man-avatar-character-260nw-661669825.jpg"
-            },
-            {
-                id: v1(),
-                name: "Sveta",
-                avatar: "https://cdn1.vectorstock.com/i/1000x1000/32/10/young-man-avatar-character-vector-14213210.jpg"
-            },
-            {
-                id: v1(),
-                name: "Sasha",
-                avatar: "https://mir-s3-cdn-cf.behance.net/project_modules/disp/b3053232163929.567197ac6e6f5.png"
-            },
-            {
-                id: v1(),
-                name: "Victor",
-                avatar: "https://media.geeksforgeeks.org/wp-content/uploads/20210209004413/AVATAR2.png"
-            },
-            {
-                id: v1(),
-                name: "Valera",
-                avatar: "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?w=2000"
-            }
+            {id: v1(), name: "Dimych"},
+            {id: v1(),name: "Andrey"},
+            {id: v1(),name: "Sveta"},
+            {id: v1(), name: "Sasha"},
+            {id: v1(),name: "Victor"},
+            {id: v1(),name: "Valera"}
         ] as DialogsType[],
         newMessageText: ""
     }
@@ -60,32 +40,12 @@ test("message should be send",()=>{
             {id: v1(), message: "Yo"}
         ] as MessagesType[],
         dialogs: [
-            {id: v1(), name: "Dimych", avatar: "https://thumbs.dreamstime.com/b/avatar-van-de-geekmens-104871313.jpg"},
-            {
-                id: v1(),
-                name: "Andrey",
-                avatar: "https://www.shutterstock.com/image-vector/young-man-avatar-character-260nw-661669825.jpg"
-            },
-            {
-                id: v1(),
-                name: "Sveta",
-                avatar: "https://cdn1.vectorstock.com/i/1000x1000/32/10/young-man-avatar-character-vector-14213210.jpg"
-            },
-            {
-                id: v1(),
-                name: "Sasha",
-                avatar: "https://mir-s3-cdn-cf.behance.net/project_modules/disp/b3053232163929.567197ac6e6f5.png"
-            },
-            {
-                id: v1(),
-                name: "Victor",
-                avatar: "https://media.geeksforgeeks.org/wp-content/uploads/20210209004413/AVATAR2.png"
-            },
-            {
-                id: v1(),
-                name: "Valera",
-                avatar: "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?w=2000"
-            }
+            {id: v1(), name: "Dimych"},
+            {id: v1(),name: "Andrey"},
+            {id: v1(),name: "Sveta"},
+            {id: v1(), name: "Sasha"},
+            {id: v1(),name: "Victor"},
+            {id: v1(),name: "Valera"}
         ] as DialogsType[],
         newMessageText: ""
     }
