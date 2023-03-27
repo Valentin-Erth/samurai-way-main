@@ -8,14 +8,12 @@ import {Provider} from "react-redux";
 
 
 
-const renderEntireTree = () => {
-    ReactDOM.render(
+  ReactDOM.render(
         <BrowserRouter>
             <Provider store={store}>
             <App/>
             </Provider>
             </BrowserRouter>,document.getElementById('root')
     );
-};
-renderEntireTree();// Отрисовка со старта
-store.subscribe(renderEntireTree);
+
+
