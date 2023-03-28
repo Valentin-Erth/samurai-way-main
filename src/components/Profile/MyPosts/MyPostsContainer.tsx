@@ -32,7 +32,6 @@ type MapStateToPropsType = {
 type MapDispatchToPropsType = {
     onPostChange: (NewText: string) => void
     addPost: (newPostText: string) => void
-
 }
 export type MyPostsPropsType = MapStateToPropsType & MapDispatchToPropsType
 const mapStateToProps = (state: RootStateType): MapStateToPropsType => {

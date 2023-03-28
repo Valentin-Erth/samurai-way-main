@@ -1,0 +1,22 @@
+.usersPhoto{
+    width: 100px;
+    height: 100px;
+}
+.wrapper{
+    display: flex;
+    padding: 5px;
+}
+.items{
+    padding: 10px;
+    width: 100%;
+    border: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+
+}
+.item{
+    align-items: center;
+}
+span{
+    padding: 5px;
+}
