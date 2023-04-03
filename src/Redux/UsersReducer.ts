@@ -5,11 +5,12 @@ export type ActionUsersTypes =
     | ReturnType<typeof unfollowAC>| ReturnType<typeof setUsersAC>
 export type UserType = {
     id: string
-    photoUrl:string
+    photos:{small: string, large:string}
     followed: boolean
-    fullName: string
+    name: string
     status: string
-    location: { city: string, country: string }
+    uniqueUrlName: string
+    // location: { city: string, country: string }
 }
 export type InitialStateType = typeof initialState;
 let initialState = {
