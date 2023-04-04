@@ -27,6 +27,7 @@ const mapDispatchToProps=(dispatch:Dispatch):MapDispatchToPropsType=>{
         setUsers:(users:UserType[])=>dispatch(setUsersAC(users))
     }
 }
+
 export const UsersContainer = connect(mapStateToProps,mapDispatchToProps)(Users);
 
 
