@@ -5,9 +5,7 @@ import axios from "axios";
 import userPhoto from "../../images/user.png"
 
 export class Users extends React.Component<UsersPropsType> {
-    constructor(props:any) {
-        super(props);
-        alert("New")
+    componentDidMount() {
         axios.get("https://social-network.samuraijs.com/api/1.0/users")
             .then(response => {
                 // debugger
