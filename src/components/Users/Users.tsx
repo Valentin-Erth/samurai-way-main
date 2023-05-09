@@ -3,6 +3,8 @@ import {UsersPropsType} from "./UsersContainer";
 import styles from "./users.module.css"
 import axios from "axios";
 import userPhoto from "../../images/user.png"
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 
 export class Users extends React.Component<UsersPropsType> {
     componentDidMount() {
@@ -27,17 +29,21 @@ export class Users extends React.Component<UsersPropsType> {
         let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize)
         console.log("pagesCount" + pagesCount)
         let pages = []
-        for (let i = 1; i <= pagesCount; i++) {
+        for (let i = 1; i <= 50; i++) {
             pages.push(i)
         }
         return (
-            <div>
-                <div>
-
+            <div className={styles.pagination}>
+                {/*<Stack spacing={2}>*/}
+                {/*    <Pagination count={pagesCount}  o shape="rounded"/>*/}
+                {/*    /!*<Pagination count={10} variant="outlined" shape="rounded" />*!/*/}
+                {/*</Stack>*/}
+                <div >
                     {pages.map((p, i) => {
                         return (
+
                             <span key={i} className={this.props.currentPage === p ?
-                                styles.selectedPage : styles.numberPage}
+                                styles.selectedPage : styles.pageItem}
                                   onClick={(event) => {
                                       this.onPageChanged(p)
                                   }}>{p}</span>
