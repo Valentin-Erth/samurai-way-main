@@ -20,3 +20,14 @@
 span{
     padding: 5px;
 }
+.selectedPage{
+    font-weight: bold;
+    cursor: pointer;
+
+}
+.numberPage{
+    cursor: pointer;
+}
+.numberPage:hover{
+    color: blue;
+}

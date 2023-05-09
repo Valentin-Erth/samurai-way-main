@@ -13,15 +13,15 @@ export const Dialogs = (props: DialogsPropsType) => {
     })
     const messagesElements = props.Data.messages.map(m => {
         return (
-            <Message key={m.id} message={m.message} id={m.id} />
+            <Message key={m.id} message={m.message} id={m.id}/>
         )
     })
 
     const onSendMessageButton = () => {
-       props.sendMessage(props.newMessageText);
+        props.sendMessage(props.newMessageText);
     }
     const onMessageChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        let NewMessage=e.currentTarget.value;
+        let NewMessage = e.currentTarget.value;
         props.updataNewMessageText(NewMessage);
     }
     return (
@@ -34,7 +34,8 @@ export const Dialogs = (props: DialogsPropsType) => {
                 <div>
                     <button onClick={onSendMessageButton}>add message</button>
                 </div>
-                <div><textarea placeholder={"Enter yuor message"} value={props.newMessageText} onChange={onMessageChangeHandler}></textarea></div>
+                <div><textarea placeholder={"Enter yuor message"} value={props.newMessageText}
+                               onChange={onMessageChangeHandler}></textarea></div>
             </div>
         </div>
     )
