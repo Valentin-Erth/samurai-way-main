@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-import {addPostActionCreator, profileReducer, updateNewPostTextActionCreator} from "./ProfileReducer";
+import {addPostActionCreator, profileReducer, profileType, updateNewPostTextActionCreator} from "./ProfileReducer";
 
 test("post should be added", ()=>{
     let initialState={
@@ -7,7 +7,8 @@ test("post should be added", ()=>{
             {id: v1(), message: "Hi,how are yuo?", likesCount: "0"},
             {id: v1(), message: "It,s my first post", likesCount: "23"}
         ],
-        newPostText: "It-kamasutra"
+        newPostText: "It-kamasutra",
+        profile: {} as profileType
     }
     let newPostText="I study React"
     const endState=profileReducer(initialState, addPostActionCreator(newPostText))
@@ -21,7 +22,8 @@ test("post should be updated", ()=>{
             {id: v1(), message: "Hi,how are yuo?", likesCount: "0"},
             {id: v1(), message: "It,s my first post", likesCount: "23"}
         ],
-        newPostText: "It-kamasutra"
+        newPostText: "It-kamasutra",
+        profile: {} as profileType
     }
     let NewText="It Boroda"
     const endState=profileReducer(initialState, updateNewPostTextActionCreator(NewText))

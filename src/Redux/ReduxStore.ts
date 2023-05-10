@@ -11,5 +11,7 @@ const rootReducers=combineReducers({
     usersPage: UsersReducer
 });
 export let store=createStore(rootReducers);
+// @ts-ignore
+window.store = store;
 export type StoreTypeRedux= typeof store
 export type RootStateType=ReturnType<typeof rootReducers>

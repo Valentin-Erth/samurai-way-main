@@ -4,6 +4,7 @@ import {UserType} from "../../Redux/UsersReducer";
 import userPhoto from "../../images/user.png"
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import {NavLink} from "react-router-dom";
 
 type UsersPropsType = {
     totalUsersCount: number
@@ -45,8 +46,11 @@ export const Users = (props: UsersPropsType) => {
                     <div key={u.id} className={styles.wrapper}>
                       <span>
                           <div>
-                              <img src={u.photos.small != null ? u.photos.small : userPhoto}
-                                   className={styles.usersPhoto}/>
+                              <NavLink to={'/profile'}>
+                                  <img src={u.photos.small != null ? u.photos.small : userPhoto}
+                                       className={styles.usersPhoto}/>
+                              </NavLink>
+
                           </div>
                           <div>
                               {u.followed
