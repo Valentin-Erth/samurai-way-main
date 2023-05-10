@@ -1,12 +1,12 @@
 import {v1} from "uuid";
 
 export type ActionUsersTypes =
-    | ReturnType<typeof followAC>
-    | ReturnType<typeof unfollowAC>
-    | ReturnType<typeof setUsersAC>
-    | ReturnType<typeof setCurrentPageAC>
-    | ReturnType<typeof setTotalUsersCountAC>
-    | ReturnType<typeof toggleIsFetchingAC>
+    | ReturnType<typeof follow>
+    | ReturnType<typeof unfollow>
+    | ReturnType<typeof setUsers>
+    | ReturnType<typeof setCurrentPage>
+    | ReturnType<typeof setTotalUsersCount>
+    | ReturnType<typeof toggleIsFetching>
 export type UserType = {
     id: string
     photos: { small: string, large: string }
@@ -48,22 +48,22 @@ export const UsersReducer = (state: InitialStateType = initialState, action: Act
             return state
     }
 }
-export const followAC = (userID: string) => ({type: "FOLLOW", userID} as const)
-export const unfollowAC = (userID: string) => {
+export const follow = (userID: string) => ({type: "FOLLOW", userID} as const)
+export const unfollow = (userID: string) => {
     return {
         type: "UNFOLLOW",
         userID
     } as const
 }
-export const setUsersAC = (users: UserType[]) => {
+export const setUsers = (users: UserType[]) => {
     return {
         type: "SET_USERS",
         users
     } as const
 }
-export const setCurrentPageAC = (currentPage: number) => ({type: "SET_CURRENT_PAGE", currentPage} as const)
-export const setTotalUsersCountAC = (totalUsersCount: number) => ({
+export const setCurrentPage = (currentPage: number) => ({type: "SET_CURRENT_PAGE", currentPage} as const)
+export const setTotalUsersCount = (totalUsersCount: number) => ({
     type: "SET_TOTAL_USERS_COUNT",
     totalUsersCount
 } as const)
-export const toggleIsFetchingAC = (isFetching: boolean) => ({type: "TOGGLE_IS_FETCGING", isFetching} as const)
+export const toggleIsFetching = (isFetching: boolean) => ({type: "TOGGLE_IS_FETCGING", isFetching} as const)
