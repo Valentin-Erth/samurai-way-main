@@ -20,7 +20,8 @@ let initialState = {
     users: [] as UserType[],
     pageSize: 5,
     totalUsersCount: 0,
-    currentPage: 2
+    currentPage: 1,
+    isFetching:false
 }
 export const UsersReducer = (state: InitialStateType = initialState, action: ActionUsersTypes): InitialStateType => {
     switch (action.type) {
@@ -37,6 +38,7 @@ export const UsersReducer = (state: InitialStateType = initialState, action: Act
         case "SET_USERS":
             return {...state, users: action.users}
         case "SET_CURRENT_PAGE":
+            debugger
             return {...state, currentPage: action.currentPage}
         case "SET_TOTAL_USERS_COUNT":
             return {...state, totalUsersCount: action.totalUsersCount}
