@@ -14,7 +14,7 @@ type UsersPropsType = {
     follow: (userId: string) => void
     unfollow: (userId: string) => void
 }
-export const Users = (props:UsersPropsType) => {
+export const Users = (props: UsersPropsType) => {
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
     // console.log("pagesCount" + pagesCount)
     let pages = []
@@ -34,7 +34,6 @@ export const Users = (props:UsersPropsType) => {
                               className={props.currentPage === p ?
                                   styles.selectedPage : styles.pageItem}
                               onClick={(e) => {
-                                  // debugger
                                   props.onPageChanged(p)
                               }}>{p}</span>
                     )
