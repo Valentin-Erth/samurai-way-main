@@ -46,7 +46,7 @@ export const Users = (props: UsersPropsType) => {
                     <div key={u.id} className={styles.wrapper}>
                       <span>
                           <div>
-                              <NavLink to={'/profile'}>
+                              <NavLink to={'/profile/'+u.id}>
                                   <img src={u.photos.small != null ? u.photos.small : userPhoto}
                                        className={styles.usersPhoto}/>
                               </NavLink>
