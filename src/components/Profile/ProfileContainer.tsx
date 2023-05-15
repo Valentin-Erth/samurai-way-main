@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {RootStateType} from "../../Redux/ReduxStore";
 import {profileType, setUserProfile} from "../../Redux/ProfileReducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
+import {profileAPI} from "../../api/api";
 
 export class ProfileApiComponent extends React.Component<ProfileWithRoutePropsType> {
     componentDidMount() {//компонента смонтирована, метод жизненного циикла, здесь запрос на сервер делаем
@@ -13,11 +14,11 @@ export class ProfileApiComponent extends React.Component<ProfileWithRoutePropsTy
         if(!userId){
             userId="2"
         }
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
-            .then(response => {
+        profileAPI.getProfile(userId)
+            .then(data => {
                 // debugger
                 // console.log(response.data)
-                this.props.setUserProfile(response.data);
+                this.props.setUserProfile(data);
 
             })
     }
