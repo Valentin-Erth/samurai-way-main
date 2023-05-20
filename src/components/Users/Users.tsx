@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import styles from "./users.module.css";
 import {UserType} from "../../Redux/UsersReducer";
 import userPhoto from "../../images/user.png"
@@ -16,8 +16,8 @@ type UsersPropsType = {
     users: UserType[]
     follow: (userId: string) => void
     unfollow: (userId: string) => void
-    toggleFollowingProgress: (isFetching: boolean, userId:string) => void
-    followingInProgress:Array<string>
+    toggleFollowingProgress: (isFetching: boolean, userId: string) => void
+    followingInProgress: Array<string>
 
 }
 export const Users = (props: UsersPropsType) => {
@@ -27,25 +27,29 @@ export const Users = (props: UsersPropsType) => {
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
     }
+    const onChangeCallback = (e:ChangeEvent<unknown>, page:number) => {
+        // console.log(page)
+        props.onPageChanged(page)
+    }
+
     return (
         <div>
-            {/*<Stack spacing={2}>*/}
-            {/*    <Pagination count={pagesCount}  o shape="rounded"/>*/}
-            {/*    /!*<Pagination count={10} variant="outlined" shape="rounded" />*!/*/}
-            {/*</Stack>*/}
-            <div className={styles.pagination}>
-                {pages.map((p, i) => {
-                    return (
-                        <span key={i}
-                              className={props.currentPage === p ?
-                                  styles.selectedPage : styles.pageItem}
-                              onClick={(e) => {
-                                  props.onPageChanged(p)
-                              }}>{p}</span>
-                    )
-                })
-                }
-            </div>
+            <Pagination count={pagesCount} page={props.currentPage} onChange={onChangeCallback} shape="circular"
+                        color={"primary"}/>
+
+            {/*<div className={styles.pagination}>*/}
+            {/*    {pages.map((p, i) => {*/}
+            {/*        return (*/}
+            {/*            <span key={i}*/}
+            {/*                  className={props.currentPage === p ?*/}
+            {/*                      styles.selectedPage : styles.pageItem}*/}
+            {/*                  onClick={(e) => {*/}
+            {/*                      props.onPageChanged(p)*/}
+            {/*                  }}>{p}</span>*/}
+            {/*        )*/}
+            {/*    })*/}
+            {/*    }*/}
+            {/*</div>*/}
             {props.users.map(u => {
                 return (
                     <div key={u.id} className={styles.wrapper}>
@@ -59,26 +63,28 @@ export const Users = (props: UsersPropsType) => {
                           </div>
                           <div>
                               {u.followed
-                                  ? <button disabled={props.followingInProgress.some(id=>id===u.id)} onClick={() => {
-                                      props.toggleFollowingProgress(true,u.id)
+                                  ?
+                                  <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
+                                      props.toggleFollowingProgress(true, u.id)
                                       followAPI.unfollow(u.id)
                                           .then(data => {
                                               // debugger
                                               if (data.resultCode === 0) {
                                                   props.unfollow(u.id)
                                               }
-                                              props.toggleFollowingProgress(false,u.id)
+                                              props.toggleFollowingProgress(false, u.id)
                                           })
 
                                   }}>Unfollow</button>
-                                  : <button disabled={props.followingInProgress.some(id=>id===u.id)} onClick={() => {
-                                      props.toggleFollowingProgress(true,u.id)
+                                  :
+                                  <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
+                                      props.toggleFollowingProgress(true, u.id)
                                       followAPI.follow(u.id)
                                           .then(data => {
                                               if (data.resultCode === 0) {
                                                   props.follow(u.id)
                                               }
-                                              props.toggleFollowingProgress(false,u.id)
+                                              props.toggleFollowingProgress(false, u.id)
                                           })
 
                                   }}>Follow</button>}
