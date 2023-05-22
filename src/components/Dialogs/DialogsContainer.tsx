@@ -35,7 +35,8 @@ import {Dispatch} from "redux";
 type MapStateToPropsType={
     Data:InitialStateType
     newMessageText:string
-}
+    isAtuth:boolean
+    }
 type MapDispatchtoPropsType={
     updataNewMessageText:(newMessageText:string)=>void
     sendMessage:(NewMessage:string)=>void
@@ -44,7 +45,8 @@ export type DialogsPropsType=MapStateToPropsType & MapDispatchtoPropsType
 const mapStateToProps=(state:RootStateType):MapStateToPropsType=>{
     return {
         Data: state.dialogsPage,
-        newMessageText:state.dialogsPage.newMessageText
+        newMessageText:state.dialogsPage.newMessageText,
+        isAtuth:state.auth.isAuth
     }
 }
 const mapDispatchToProps=(dispatch: Dispatch):MapDispatchtoPropsType=>{
