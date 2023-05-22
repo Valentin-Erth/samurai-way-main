@@ -5,9 +5,9 @@ import {Dispatch} from "redux";
 import CircularProgress from '@mui/material/CircularProgress';
 import preloader from '../../images/preloader-4.gif';
 import {
-    followSuccess, getUsersTC,
+    followSuccess, followTC, getUsersTC,
     setCurrentPage,
-    toggleFollowingProgress, unfollowSuccess,
+    toggleFollowingProgress, unfollowSuccess, unfollowTC,
     UserType
 } from "../../Redux/UsersReducer";
 import {Users} from "./Users";
@@ -36,6 +36,9 @@ export class UsersApiComponent extends React.Component<UsersApiPropsType> {
                    unfollow={this.props.unfollow}
                    follow={this.props.follow}
                    followingInProgress={this.props.followingInProgress}
+                   unfollowTC={this.props.unfollowTC}
+                   followTC={this.props.follow}
+
             />
         </>
     }
@@ -50,6 +53,8 @@ type MapStateToPropsType = {
     followingInProgress:Array<string>
 }
 type MapDispatchToPropsType = {
+    unfollowTC:(userId:string)=>void
+    followTC:(userId:string)=>void
     follow: (userId: string) => void
     unfollow: (userId: string) => void
     //setUsers: (users: UserType[]) => void
@@ -82,7 +87,7 @@ const mapStateToProps = (state: RootStateType): MapStateToPropsType => {
 //     }
 // }
 export const UsersContainer = connect(mapStateToProps, {
-    follow: followSuccess,unfollow: unfollowSuccess,setCurrentPage,toggleFollowingProgress,getUsersTC
+    follow: followSuccess,unfollow: unfollowSuccess,setCurrentPage,toggleFollowingProgress,getUsersTC,unfollowTC,followTC
 })(UsersApiComponent);
 
 

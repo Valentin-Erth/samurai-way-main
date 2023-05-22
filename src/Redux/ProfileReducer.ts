@@ -1,4 +1,6 @@
 import {v1} from "uuid";
+import {AppThunk} from "./ReduxStore";
+import {usersAPI} from "../api/api";
 
 export type ActionProfileTypes =
     | ReturnType<typeof addPostActionCreator>
@@ -95,4 +97,11 @@ export const updateNewPostTextActionCreator = (NewText: string) => {
         type: "UPDATE_NEW_POST_TEXT",
         NewText: NewText
     } as const
+}
+//thunsk
+export const getUserProfileTC=(userId:string):AppThunk=>(dispatch)=>{
+    usersAPI.getProfile(userId)
+        .then(data => {
+            dispatch(setUserProfile(data));
+        })
 }

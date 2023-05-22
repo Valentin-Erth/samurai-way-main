@@ -15,6 +15,8 @@ type UsersPropsType = {
     unfollow: (userId: string) => void
     //toggleFollowingProgress: (isFetching: boolean, userId: string) => void
     followingInProgress: Array<string>
+    unfollowTC:(userId:string)=>void
+    followTC:(userId:string)=>void
 
 }
 export const Users = (props: UsersPropsType) => {
@@ -60,10 +62,14 @@ export const Users = (props: UsersPropsType) => {
                           <div>
                               {u.followed
                                   ?
-                                  <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {unfollowTC(u.id)}}>
+                                  <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
+                                      debugger
+                                      props.unfollowTC(u.id)}}>
                                       Unfollow</button>
                                   :
-                                  <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {followTC(u.id)}}>Follow</button>}
+                                  <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
+                                      debugger
+                                      props.followTC(u.id)}}>Follow</button>}
                           </div>
                       </span>
                         <div className={styles.items}>

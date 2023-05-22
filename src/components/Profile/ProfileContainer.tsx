@@ -3,9 +3,9 @@ import {Profile} from "./Profile";
 import axios from "axios";
 import {connect} from "react-redux";
 import {RootStateType} from "../../Redux/ReduxStore";
-import {profileType, setUserProfile} from "../../Redux/ProfileReducer";
+import {getUserProfileTC, profileType, setUserProfile} from "../../Redux/ProfileReducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
-import {profileAPI} from "../../api/api";
+import {usersAPI} from "../../api/api";
 
 export class ProfileApiComponent extends React.Component<ProfileWithRoutePropsType> {
     componentDidMount() {//компонента смонтирована, метод жизненного циикла, здесь запрос на сервер делаем
@@ -14,13 +14,7 @@ export class ProfileApiComponent extends React.Component<ProfileWithRoutePropsTy
         if(!userId){
             userId="2"
         }
-        profileAPI.getProfile(userId)
-            .then(data => {
-                // debugger
-                // console.log(response.data)
-                this.props.setUserProfile(data);
-
-            })
+        this.props.getUserProfileTC(userId)
     }
 
     render() {
@@ -30,14 +24,14 @@ export class ProfileApiComponent extends React.Component<ProfileWithRoutePropsTy
         );
     }
 };
-//{...this.props}
 type ProfilePropsType=MapStateToPropsType & MapDispatchToPropsType
 type ProfileWithRoutePropsType=RouteComponentProps<PathParamsType>& ProfilePropsType
 type MapStateToPropsType={
     profile:profileType
 }
 type MapDispatchToPropsType={
-    setUserProfile:(profile:profileType)=>void
+    //setUserProfile:(profile:profileType)=>void
+    getUserProfileTC:(userId:string)=>void
 }
 const mapStateToProps = (state: RootStateType): MapStateToPropsType => {
     return {
@@ -49,4 +43,4 @@ type PathParamsType={
 }
 const WithUrkDataContainerComponent=withRouter(ProfileApiComponent)
 
-export const ProfileContainer=connect(mapStateToProps,{setUserProfile})(WithUrkDataContainerComponent)
+export const ProfileContainer=connect(mapStateToProps,{getUserProfileTC})(WithUrkDataContainerComponent)

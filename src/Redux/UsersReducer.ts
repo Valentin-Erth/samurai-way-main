@@ -1,6 +1,4 @@
 import {usersAPI} from "../api/api";
-import {Dispatch} from "redux";
-import {ThunkAction} from "redux-thunk";
 import {AppThunk} from "./ReduxStore";
 
 export type ActionUsersTypes =
@@ -100,6 +98,7 @@ export const unfollowTC=(userId:string):AppThunk=>(dispatch)=>{
     dispatch(toggleFollowingProgress(true, userId))
     usersAPI.unfollow(userId)
         .then(data => {
+            debugger
            if (data.resultCode === 0) {
                dispatch(unfollowSuccess(userId))
             }
@@ -107,9 +106,11 @@ export const unfollowTC=(userId:string):AppThunk=>(dispatch)=>{
         })
 }
 export const followTC=(userId:string):AppThunk=>(dispatch)=>{
+    debugger
     dispatch(toggleFollowingProgress(true, userId))
     usersAPI.follow(userId)
         .then(data => {
+            debugger
             if (data.resultCode === 0) {
                 dispatch(followSuccess(userId))
             }
