@@ -11,14 +11,6 @@ export const usersAPI={
                 return  response.data
             })
     },
-    getUsers2(currentPage:number,pageSize:number){
-        return instance.get(`users?page=${currentPage}&count=${pageSize}`)
-            .then((response)=> {
-                return  response.data
-            })
-    }
-}
-export const followAPI={
     follow(id:string){
         return instance.post(`follow/${id}`,{})
             .then((res)=>res.data)
@@ -28,6 +20,7 @@ export const followAPI={
             .then((res)=>res.data)
     }
 }
+
 export const profileAPI={
     getProfile(userId:string){
         return instance.get(`profile/${userId}`)

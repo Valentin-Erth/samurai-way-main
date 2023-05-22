@@ -1,12 +1,9 @@
 import React, {ChangeEvent} from 'react';
 import styles from "./users.module.css";
-import {UserType} from "../../Redux/UsersReducer";
+import {followTC, unfollowTC, UserType} from "../../Redux/UsersReducer";
 import userPhoto from "../../images/user.png"
 import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
 import {NavLink} from "react-router-dom";
-import axios from "axios";
-import {followAPI} from "../../api/api";
 
 type UsersPropsType = {
     totalUsersCount: number
@@ -16,27 +13,26 @@ type UsersPropsType = {
     users: UserType[]
     follow: (userId: string) => void
     unfollow: (userId: string) => void
-    toggleFollowingProgress: (isFetching: boolean, userId: string) => void
+    //toggleFollowingProgress: (isFetching: boolean, userId: string) => void
     followingInProgress: Array<string>
 
 }
 export const Users = (props: UsersPropsType) => {
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
-    // console.log("pagesCount" + pagesCount)
+    console.log("pagesCount" + pagesCount)
     let pages = []
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
     }
     const onChangeCallback = (e:ChangeEvent<unknown>, page:number) => {
-        // console.log(page)
+      // debugger
         props.onPageChanged(page)
     }
-
+    console.log(props.currentPage)
     return (
         <div>
-            <Pagination count={pagesCount} page={props.currentPage} onChange={onChangeCallback} shape="circular"
-                        color={"primary"}/>
-
+            <Pagination count={pagesCount} page={props.currentPage} onChange={onChangeCallback} shape="circular" color={"primary"}/>
+            {/*пагинация кастомная через итерацию массива*/}
             {/*<div className={styles.pagination}>*/}
             {/*    {pages.map((p, i) => {*/}
             {/*        return (*/}
@@ -64,30 +60,10 @@ export const Users = (props: UsersPropsType) => {
                           <div>
                               {u.followed
                                   ?
-                                  <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
-                                      props.toggleFollowingProgress(true, u.id)
-                                      followAPI.unfollow(u.id)
-                                          .then(data => {
-                                              // debugger
-                                              if (data.resultCode === 0) {
-                                                  props.unfollow(u.id)
-                                              }
-                                              props.toggleFollowingProgress(false, u.id)
-                                          })
-
-                                  }}>Unfollow</button>
+                                  <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {unfollowTC(u.id)}}>
+                                      Unfollow</button>
                                   :
-                                  <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
-                                      props.toggleFollowingProgress(true, u.id)
-                                      followAPI.follow(u.id)
-                                          .then(data => {
-                                              if (data.resultCode === 0) {
-                                                  props.follow(u.id)
-                                              }
-                                              props.toggleFollowingProgress(false, u.id)
-                                          })
-
-                                  }}>Follow</button>}
+                                  <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {followTC(u.id)}}>Follow</button>}
                           </div>
                       </span>
                         <div className={styles.items}>
