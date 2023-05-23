@@ -7,34 +7,9 @@ import {
 import {RootStateType} from "../../Redux/ReduxStore";
 import {Dialogs} from "./Dialogs";
 import {connect} from "react-redux";
-import {Dispatch} from "redux";
-import {Redirect} from "react-router-dom";
-import {ProfileApiComponent} from "../Profile/ProfileContainer";
+import {compose, Dispatch} from "redux";
 import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
 
-
-// export const DialogsContainer = (props: DialogsContainerType) => {
-// // debugger;
-//
-//     return(
-//         <StoreContext.Consumer>
-//             {(store)=>{
-//                 const state:RootStateType=store.getState();
-//                 const onSendMessageButton = (newMessageText:string) => {
-//                     store.dispatch(sendMessageActionCreator(newMessageText));
-//                 }
-//                 const onMessageChangeHandler = (NewMessage:string) => {
-//                     store.dispatch(updataNewMessageTextActionCreator(NewMessage))
-//                 }
-//                 return(
-//                     <Dialogs updataNewMessageText={onMessageChangeHandler}
-//                              sendMessage={onSendMessageButton}
-//                              newMessageText={state.dialogsPage.newMessageText}
-//                              Data={state.dialogsPage}/>
-//                     )}
-//         }
-//         </StoreContext.Consumer>
-//         )}
 type MapStateToPropsType={
     Data:InitialStateType
     newMessageText:string
@@ -62,6 +37,8 @@ const mapDispatchToProps=(dispatch: Dispatch):MapDispatchtoPropsType=>{
 
     }
 }
-let AuthRedirectComponent=WithAuthRedirect(Dialogs)
+export const DialogsContainer=compose<React.ComponentType>(
+    connect(mapStateToProps,mapDispatchToProps),
+    WithAuthRedirect
+)(Dialogs)
 
-export const DialogsContainer=connect(mapStateToProps,mapDispatchToProps)(AuthRedirectComponent);

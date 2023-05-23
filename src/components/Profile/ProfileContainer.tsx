@@ -7,6 +7,7 @@ import {getUserProfileTC, profileType, setUserProfile} from "../../Redux/Profile
 import {Redirect, RouteComponentProps, withRouter} from "react-router-dom";
 import {usersAPI} from "../../api/api";
 import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 export class ProfileApiComponent extends React.Component<ProfileWithRoutePropsType> {
     componentDidMount() {//компонента смонтирована, метод жизненного циикла, здесь запрос на сервер делаем
@@ -19,7 +20,6 @@ export class ProfileApiComponent extends React.Component<ProfileWithRoutePropsTy
     }
 
     render() {
-
         return (
             <Profile {...this.props} profile={this.props.profile}/>
         );
@@ -38,14 +38,17 @@ type MapDispatchToPropsType = {
     getUserProfileTC: (userId: string) => void
 }
 
-
-let AuthRedirectComponent=WithAuthRedirect(ProfileApiComponent)
-
 const mapStateToProps = (state: RootStateType): MapStateToPropsType => ({
 profile: state.profilePage.profile})
 type PathParamsType = {
     userId: string
 }
-const WithUrkDataContainerComponent = withRouter(AuthRedirectComponent)
-
-export const ProfileContainer = connect(mapStateToProps, {getUserProfileTC})(WithUrkDataContainerComponent)
+//использовали функцию compose взамен конвейера вызовов hoc
+export const ProfileContainer=compose<React.ComponentType>(
+    connect(mapStateToProps, {getUserProfileTC}),
+    withRouter,
+    WithAuthRedirect
+)(ProfileApiComponent)
+// let AuthRedirectComponent=WithAuthRedirect(ProfileApiComponent)
+// const WithUrkDataContainerComponent = withRouter(AuthRedirectComponent)
+// export const ProfileContainer = connect(mapStateToProps, {getUserProfileTC})(WithUrkDataContainerComponent)

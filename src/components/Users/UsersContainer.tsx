@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from "react-redux";
 import {AppThunk, RootStateType} from "../../Redux/ReduxStore";
-import {Dispatch} from "redux";
+import {compose, Dispatch} from "redux";
 import CircularProgress from '@mui/material/CircularProgress';
 import preloader from '../../images/preloader-4.gif';
 import {
@@ -78,20 +78,13 @@ const mapStateToProps = (state: RootStateType): MapStateToPropsType => {
         followingInProgress: state.usersPage.followingInProgress
     }
 }
-// const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
-//     return {
-//         follow: (userId: string) => dispatch(followAC(userId)),
-//         unfollow: (userId: string) => dispatch(unfollowAC(userId)),
-//         setUsers: (users: UserType[]) => dispatch(setUsersAC(users)),
-//         setCurrentPage: (pageNumber: number) => dispatch(setCurrentPageAC(pageNumber)),
-//         setTotalUsersCount: (totalCount: number) => dispatch(setTotalUsersCountAC(totalCount)),
-//         toggleIsFetching: (isFetching) => dispatch(toggleIsFetchingAC(isFetching))
-//     }
-// }
-let WithRedirectComponent=WithAuthRedirect(UsersApiComponent)
 
-export const UsersContainer = connect(mapStateToProps, {
-    follow: followSuccess,unfollow: unfollowSuccess,setCurrentPage,toggleFollowingProgress,getUsersTC,unfollowTC,followTC
-})(WithRedirectComponent);
+export const UsersContainer=compose<React.ComponentType>(
+    connect(mapStateToProps, {
+        follow: followSuccess,unfollow: unfollowSuccess,setCurrentPage,toggleFollowingProgress,getUsersTC,unfollowTC,followTC
+    }),
+    WithAuthRedirect
+)(UsersApiComponent)
+
 
 
