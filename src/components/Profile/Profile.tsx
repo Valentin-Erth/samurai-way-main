@@ -6,14 +6,13 @@ import {profileType} from "../../Redux/ProfileReducer";
 
 type ProfileType = {
     profile:profileType
-    //Data: profilePageType
-    //dispatch: (action: ActionTypes) => void
-    // store: StoreTypeRedux
-}
+    updateStatus:(status:string)=>void
+    status:string
+    }
 export const Profile = (props: ProfileType) => {
     return (
         <div>
-            <ProfileInfo profile={props.profile}/>
+            <ProfileInfo profile={props.profile} status={props.status} updateStatus={props.updateStatus}/>
             <MyPostsContainer/>
         </div>
     )

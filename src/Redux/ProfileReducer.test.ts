@@ -8,7 +8,8 @@ test("post should be added", ()=>{
             {id: v1(), message: "It,s my first post", likesCount: "23"}
         ],
         newPostText: "It-kamasutra",
-        profile: {} as profileType
+        profile: {} as profileType,
+        status:""
     }
     let newPostText="I study React"
     const endState=profileReducer(initialState, addPostActionCreator(newPostText))
@@ -23,7 +24,8 @@ test("post should be updated", ()=>{
             {id: v1(), message: "It,s my first post", likesCount: "23"}
         ],
         newPostText: "It-kamasutra",
-        profile: {} as profileType
+        profile: {} as profileType,
+        status:""
     }
     let NewText="It Boroda"
     const endState=profileReducer(initialState, updateNewPostTextActionCreator(NewText))

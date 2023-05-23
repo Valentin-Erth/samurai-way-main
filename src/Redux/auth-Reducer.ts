@@ -6,7 +6,7 @@ export type ActionAuthTypes =
 
 export type InitialStateType = typeof initialState;
 let initialState = {
-    userId: "0",
+    userId: 0,
     login: "",
     email: "",
     isAuth: false
@@ -23,7 +23,7 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
             return state
     }
 }
-export const setAuthUserData = (userId: string, email: string, login: string) => ({
+export const setAuthUserData = (userId: number, email: string, login: string) => ({
     type: "SET_USER_DATA",
     data: {userId, email, login}
 } as const)
