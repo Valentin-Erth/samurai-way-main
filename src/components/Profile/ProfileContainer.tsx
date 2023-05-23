@@ -6,6 +6,7 @@ import {RootStateType} from "../../Redux/ReduxStore";
 import {getUserProfileTC, profileType, setUserProfile} from "../../Redux/ProfileReducer";
 import {Redirect, RouteComponentProps, withRouter} from "react-router-dom";
 import {usersAPI} from "../../api/api";
+import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
 
 export class ProfileApiComponent extends React.Component<ProfileWithRoutePropsType> {
     componentDidMount() {//компонента смонтирована, метод жизненного циикла, здесь запрос на сервер делаем
@@ -18,31 +19,33 @@ export class ProfileApiComponent extends React.Component<ProfileWithRoutePropsTy
     }
 
     render() {
-        if(!this.props.isAtuth) return <Redirect to={"/login"}/>
+
         return (
             <Profile {...this.props} profile={this.props.profile}/>
         );
     }
 };
+
+
+
 type ProfilePropsType = MapStateToPropsType & MapDispatchToPropsType
 type ProfileWithRoutePropsType = RouteComponentProps<PathParamsType> & ProfilePropsType
 type MapStateToPropsType = {
     profile: profileType
-    isAtuth:boolean
-}
+ }
 type MapDispatchToPropsType = {
     //setUserProfile:(profile:profileType)=>void
     getUserProfileTC: (userId: string) => void
 }
-const mapStateToProps = (state: RootStateType): MapStateToPropsType => {
-    return {
-        profile: state.profilePage.profile,
-        isAtuth: state.auth.isAuth
-    }
-}
+
+
+let AuthRedirectComponent=WithAuthRedirect(ProfileApiComponent)
+
+const mapStateToProps = (state: RootStateType): MapStateToPropsType => ({
+profile: state.profilePage.profile})
 type PathParamsType = {
     userId: string
 }
-const WithUrkDataContainerComponent = withRouter(ProfileApiComponent)
+const WithUrkDataContainerComponent = withRouter(AuthRedirectComponent)
 
 export const ProfileContainer = connect(mapStateToProps, {getUserProfileTC})(WithUrkDataContainerComponent)

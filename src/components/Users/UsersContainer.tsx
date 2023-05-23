@@ -12,6 +12,8 @@ import {
 } from "../../Redux/UsersReducer";
 import {Users} from "./Users";
 import {Preloader} from "../common/Preloader/Preloader";
+import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
+import {Dialogs} from "../Dialogs/Dialogs";
 
 
 export class UsersApiComponent extends React.Component<UsersApiPropsType> {
@@ -86,8 +88,10 @@ const mapStateToProps = (state: RootStateType): MapStateToPropsType => {
 //         toggleIsFetching: (isFetching) => dispatch(toggleIsFetchingAC(isFetching))
 //     }
 // }
+let WithRedirectComponent=WithAuthRedirect(UsersApiComponent)
+
 export const UsersContainer = connect(mapStateToProps, {
     follow: followSuccess,unfollow: unfollowSuccess,setCurrentPage,toggleFollowingProgress,getUsersTC,unfollowTC,followTC
-})(UsersApiComponent);
+})(WithRedirectComponent);
 
 
