@@ -104,7 +104,7 @@ export const setStatusAC = (status: string) => ({
         status: status
     }as const)
 
-//thunsk
+//thunk
 export const getUserProfileTC = (userId: string): AppThunk => (dispatch) => {
     profileAPI.getProfile(userId)
         .then(data => {

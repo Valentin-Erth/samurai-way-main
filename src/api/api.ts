@@ -36,6 +36,9 @@ export const authAPI = {
     getAuthMe() {
         return instance.get<ResponseType<dataAuthResponseType>>(`auth/me`)
             .then((res) => res.data)
+    },
+    login(data:LoginParamsType){
+        return instance.post<ResponseType<{userId?: number}>>(`auth/login`,data)
     }
 }
 
@@ -49,4 +52,10 @@ type dataAuthResponseType={
     id:number
     email: string
     login: string
+}
+export type LoginParamsType = {
+    email: string
+    password: string
+    rememberMe?: boolean
+    captcha?: boolean
 }
