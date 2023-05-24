@@ -20,7 +20,7 @@ export class ProfileApiComponent extends React.Component<ProfileWithRoutePropsTy
         // debugger
         let userId = this.props.match.params.userId
         if (!userId) {
-            userId = "2"
+            userId = "28517"
         }
         this.props.getUserProfileTC(userId)
         this.props.getUserStatusTC(userId)
